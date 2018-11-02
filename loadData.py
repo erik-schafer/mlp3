@@ -2,6 +2,8 @@ import xml.etree.ElementTree as ET
 import json
 import pandas as pd
 
+basepath = "C:/workspace/ML p3"
+
 class loadData:
     def loadSitecoreExtract():        
         tree = ET.parse("C:/Users/erik.schafer/Documents/sitecore_extract.xml")
@@ -65,3 +67,33 @@ class loadData:
             #dataValues.append([d['features'][x] if x in d['features'] else 0 for x in dataKeys])    
         print("end etl ")
         return pd.DataFrame(dataValues, columns = dataKeys)
+
+
+    def loadCancer():    
+        filename = "breast_cancer_data.csv"
+        data = pd.read_csv(basepath + '/' + filename)
+        data = data.drop("id", 1)
+        data = data.drop("Unnamed: 32", 1)
+        X = data.drop("diagnosis", 1)
+        y = pd.get_dummies(data["diagnosis"])["M"]
+        return X, y
+
+    def loadCreditCard():
+        filename = "creditcard.csv"
+        data = pd.read_csv(basepath + '/' + filename)
+        X = data.drop("Class", 1)
+        y = data["Class"]
+        return X, y
+
+    def loadNintendo():
+        filename = "vgsales.csv"
+        data = pd.read_csv(basepath + '/' + filename)
+        data = data.drop("Rank", 1)
+        data = data.drop("Name", 1)
+        data.Platform = pd.Categorical(data.Platform).codes
+        data.Genre = pd.Categorical(data.Genre).codes
+        data.Publisher = pd.Categorical(data.Publisher).codes
+        data = data.dropna()
+        X = data.drop("Platform",1)
+        y = data.Platform
+        return X, y
