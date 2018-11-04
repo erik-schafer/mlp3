@@ -55,7 +55,7 @@ X, y = make_blobs(n_samples=500,
 
 range_n_clusters = [2, 3, 4, 5, 6]
 
-def silhouette_analysis(X, start, stop):
+def silhouette_analysis(X, start, stop, save = False, filename = ""):
     range_n_clusters = range(start, stop)
 
 
@@ -142,4 +142,7 @@ def silhouette_analysis(X, start, stop):
         plt.suptitle(("Silhouette analysis for KMeans clustering on sample data "
                     "with n_clusters = %d" % n_clusters),
                     fontsize=14, fontweight='bold')
-    plt.show()
+        if not save:
+            plt.show()
+        else:
+            plt.savefig(filename+"-"+str(n_clusters) + ".png")

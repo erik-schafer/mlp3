@@ -2,11 +2,11 @@ import xml.etree.ElementTree as ET
 import json
 import pandas as pd
 
-basepath = "C:/workspace/ML p3"
+basepath_data = "C:/workspace/ML p3"
 
 class loadData:
     def loadSitecoreExtract():        
-        tree = ET.parse("C:/Users/erik.schafer/Documents/sitecore_extract.xml")
+        tree = ET.parse("sitecore_extract.xml")
         root = tree.getroot()
 
         #NLP Payload extraction
@@ -71,7 +71,8 @@ class loadData:
 
     def loadCancer():    
         filename = "breast_cancer_data.csv"
-        data = pd.read_csv(basepath + '/' + filename)
+        #data = pd.read_csv(basepath_data + '/' + filename)
+        data = pd.read_csv(filename)
         data = data.drop("id", 1)
         data = data.drop("Unnamed: 32", 1)
         X = data.drop("diagnosis", 1)
@@ -80,14 +81,14 @@ class loadData:
 
     def loadCreditCard():
         filename = "creditcard.csv"
-        data = pd.read_csv(basepath + '/' + filename)
+        data = pd.read_csv(basepath_data + '/' + filename)
         X = data.drop("Class", 1)
         y = data["Class"]
         return X, y
 
     def loadNintendo():
         filename = "vgsales.csv"
-        data = pd.read_csv(basepath + '/' + filename)
+        data = pd.read_csv(basepath_data + '/' + filename)
         data = data.drop("Rank", 1)
         data = data.drop("Name", 1)
         data.Platform = pd.Categorical(data.Platform).codes
